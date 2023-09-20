@@ -1,5 +1,6 @@
 package com.majcher.blogbackend;
 
+import java.net.UnknownHostException;
 import java.util.List;
 
 public class CommentFacade {
@@ -11,10 +12,14 @@ public class CommentFacade {
     }
 
     public List<Comment> getComments(Long postId, Long commentId) {
-        return jsonPlaceHolderClient
-                .getCommentsByPostIdAndCommentId(postId, commentId)
-                .stream()
-                .map(Comment::fromDto)
-                .toList();
+        try {
+            return jsonPlaceHolderClient
+                    .getCommentsByPostIdAndCommentId(postId, commentId)
+                    .stream()
+                    .map(Comment::fromDto)
+                    .toList();
+        } catch (UnknownHostException e) {
+            throw new ExternalSystemUnavailableException();
+        }
     }
 }

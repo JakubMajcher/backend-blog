@@ -50,4 +50,15 @@ class CommentFacadeTest extends Specification implements CommentFacadeSamples {
             assert it.body() == commentDto.body()
         }
     }
+
+    def "should throw ExternalSystemUnavailableException when external api is down"() {
+        when:
+        1 * jsonPlaceHolderClient.getCommentsByPostIdAndCommentId(_ as Long, _ as Long) >> { throw new UnknownHostException() }
+
+        and:
+        commentFacade.getComments(1l, 1l)
+
+        then:
+        thrown(ExternalSystemUnavailableException)
+    }
 }

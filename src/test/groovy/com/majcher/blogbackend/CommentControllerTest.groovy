@@ -48,4 +48,10 @@ class CommentControllerTest extends Specification implements CommentControllerSa
         null      | "/v1/posts/{postId}/comments"
         1         | "/v1/posts/{postId}/comments?id=1"
     }
+
+    def "when get is performed with wrong query parameter then the response has status 400"() {
+        expect:
+        mvc.perform(get("/v1/posts/{postId}/comments?id=a", "1"))
+                .andExpect(status().isBadRequest())
+    }
 }

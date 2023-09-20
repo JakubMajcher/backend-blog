@@ -11,9 +11,9 @@ class JSONPlaceHolderClientTest extends Specification {
     @Autowired
     JSONPlaceHolderClient jsonPlaceHolderClient
 
-    def "check size of all comments is 500"() {
+    def "check size of all comments of first post is 5"() {
         expect:
-        def comments = jsonPlaceHolderClient.getComments()
-        comments.size() == 500
+        def comments = jsonPlaceHolderClient.getCommentsByPostIdAndCommentId(1, null)
+        comments.size() == 5
     }
 }

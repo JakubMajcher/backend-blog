@@ -14,8 +14,8 @@ class CommentFacadeTest extends Specification implements CommentFacadeSamples {
 
     def "should return no comments when client return empty list"() {
         when:
-        1 * jsonPlaceHolderClient.getComments() >> emptyList
-        def comments = commentFacade.getComments()
+        1 * jsonPlaceHolderClient.getCommentsByPostIdAndCommentId(_ as Long, _ as Long) >> emptyList
+        def comments = commentFacade.getComments(1l, 1l)
 
         then:
         comments.size() == 0
@@ -23,8 +23,8 @@ class CommentFacadeTest extends Specification implements CommentFacadeSamples {
 
     def "should return one comment when client return one comment dto"() {
         when:
-        1 * jsonPlaceHolderClient.getComments() >> oneCommentList
-        def comments = commentFacade.getComments()
+        1 * jsonPlaceHolderClient.getCommentsByPostIdAndCommentId(_ as Long, _ as Long) >> oneCommentList
+        def comments = commentFacade.getComments(1l, 1l)
 
         then:
         comments.size() == 1
@@ -37,8 +37,8 @@ class CommentFacadeTest extends Specification implements CommentFacadeSamples {
 
     def "should return three comments when client return three comments dto"() {
         when:
-        1 * jsonPlaceHolderClient.getComments() >> thereCommentsList
-        def comments = commentFacade.getComments()
+        1 * jsonPlaceHolderClient.getCommentsByPostIdAndCommentId(_ as Long, _ as Long) >> thereCommentsList
+        def comments = commentFacade.getComments(1l, 1l)
 
         then:
         comments.size() == 3
